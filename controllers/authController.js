@@ -31,6 +31,7 @@ const authController = {
     // Login
     login: async (req, res) => {
         try {
+            // Check usernames are not case sensitive
             const user = await User.findOne({ username: { $regex: new RegExp("^" + req.body.username + "$", "i") } })
             if (!user) {
                 res.status(404).json({
