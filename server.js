@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const cookieParser =require('cookie-parser')
 const morgan = require('morgan')
 const dotenv = require('dotenv')
-const authRoute = require('./routes/authRoute')
+const authRoute = require('./Routes/authRoute')
 
 // connect database
 dotenv.config()
