@@ -65,7 +65,8 @@ const authController = {
                     { expiresIn: "356d" }
                 )
                 // Hide password after show information
-                const { password, ...others } = user._doc
+                const infor = await (await User.findById(user._id)).populate('tasks')
+                const { password, ...others } = infor._doc
                 return res.status(200).json({ ...others, accestoken, refreshToken })
             }
         } catch (error) {
