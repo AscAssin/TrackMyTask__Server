@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const taskShema = new mongoose.Schema({
     taskname: {
         type: String,
+        minlength: 3,
         require: true
     },
     decription: {
@@ -22,8 +23,9 @@ const taskShema = new mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
+        require: true,
         ref: "User"
     }
 })
 
-module.exports = mongoose.model("Task",taskShema)
+module.exports = mongoose.model("Task", taskShema)

@@ -1,6 +1,6 @@
 const User = require("../models/userModel")
 const bcrypt = require('bcrypt')
-
+const jwt = require('jsonwebtoken')
 
 const authController = {
     // register
@@ -22,9 +22,9 @@ const authController = {
 
             // save to db
             const saved = await newUser.save()
-            res.status(200).json(saved)
+            return res.status(200).json(saved)
         } catch (error) {
-            res.status(500).json(error)
+            return res.status(500).json(error)
         }
     },
 
@@ -34,7 +34,7 @@ const authController = {
             // Check usernames are not case sensitive
             const user = await User.findOne({ username: { $regex: new RegExp("^" + req.body.username + "$", "i") } })
             if (!user) {
-                res.status(404).json({
+                return res.status(404).json({
                     message: "Wrong username!"
                 })
             }
@@ -43,16 +43,33 @@ const authController = {
                 user.password
             )
             if (!validPass) {
-                res.status(404).json({
+                return res.status(404).json({
                     message: "Wrong passowrd!"
                 })
             }
 
             if (user && validPass) {
-                res.status(200).json(user)
+                // Create access token have user's id
+                const accestoken = jwt.sign({
+                    id: user.id
+                },
+                    process.env.JWT_ACCESS_KEY,
+                    { expiresIn: "1h" }
+                )
+
+                // Create refresh token
+                const refreshToken = jwt.sign({
+                    id: user.id
+                },
+                    process.env.JWT_REFRESH_KEY,
+                    { expiresIn: "356d" }
+                )
+                // Hide password after show information
+                const { password, ...others } = user._doc
+                return res.status(200).json({ ...others, accestoken, refreshToken })
             }
         } catch (error) {
-            res.status(500).json(error)
+            return res.status(500).json(error)
         }
     }
 }

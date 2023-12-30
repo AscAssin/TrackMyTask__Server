@@ -3,15 +3,17 @@ const cors = require('cors')
 const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const cookieParser =require('cookie-parser')
+const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
 const dotenv = require('dotenv')
 const authRoute = require('./Routes/authRoute')
+const userRoute = require('./Routes/userRoute')
+const taskRoute = require('./Routes/taskRoute')
 
 // connect database
 dotenv.config()
-mongoose.connect(process.env.MONGODB_URL,{
-    dbName:"TaskTracking"
+mongoose.connect(process.env.MONGODB_URL, {
+    dbName: "TaskTracking"
 })
     .then(
         () => console.log("Connected!")
@@ -27,6 +29,8 @@ app.use(cookieParser())
 
 // routes
 app.use('/account', authRoute)
+app.use('/api/user', userRoute)
+app.use('/task', taskRoute)
 
 // Start server
 const port = app.get('port') || 8000
