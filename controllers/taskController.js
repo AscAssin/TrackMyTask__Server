@@ -15,9 +15,9 @@ const taskController = {
                 // user's array tasks. then save the new task
                 const user = User.findById(req.body.user)
                 await user.updateOne({ $push: { tasks: newTask._id } })
-                await newTask.save()
+                const saved = await newTask.save()
+                return res.status(200).json(saved)
             }
-            res.status(200).json(newTask)
         } catch (error) {
             return res.status(500).json(error)
         }

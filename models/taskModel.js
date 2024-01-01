@@ -1,19 +1,19 @@
 const mongoose = require('mongoose')
 
 const taskShema = new mongoose.Schema({
-    taskname: {
+    taskName: {
         type: String,
         minlength: 3,
         require: true
     },
-    decription: {
+    description: {
         type: String
     },
-    startdate: {
+    startDate: {
         type: Date,
         require: true
     },
-    enddate: {
+    endDate: {
         type: Date,
         require: true
     },

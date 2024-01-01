@@ -13,10 +13,10 @@ const authController = {
             const newUser = await new User({
                 username: req.body.username,
                 password: hashed,
-                fullname: req.body.fullname,
+                fullName: req.body.fullName,
                 email: req.body.email,
-                googleid: req.body.googleid,
-                accestoken: req.body.accestoken,
+                googleId: req.body.googleId,
+                accessToken: req.body.accessToken,
                 avatar: req.body.avatar,
             })
 
@@ -44,13 +44,13 @@ const authController = {
             )
             if (!validPass) {
                 return res.status(404).json({
-                    message: "Wrong passowrd!"
+                    message: "Wrong password!"
                 })
             }
 
             if (user && validPass) {
                 // Create access token have user's id
-                const accestoken = jwt.sign({
+                const accessToken = jwt.sign({
                     id: user.id
                 },
                     process.env.JWT_ACCESS_KEY,
@@ -65,9 +65,9 @@ const authController = {
                     { expiresIn: "356d" }
                 )
                 // Hide password after show information
-                const infor = await (await User.findById(user._id)).populate('tasks')
-                const { password, ...others } = infor._doc
-                return res.status(200).json({ ...others, accestoken, refreshToken })
+                const info = await (await User.findById(user._id)).populate('tasks')
+                const { password, ...others } = info._doc
+                return res.status(200).json({ ...others, accessToken, refreshToken })
             }
         } catch (error) {
             return res.status(500).json(error)

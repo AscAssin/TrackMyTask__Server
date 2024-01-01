@@ -6,8 +6,8 @@ const middlewareController = {
     verifyToken: (req, res, next) => {
         const token = req.headers.token
         if (token) {
-            const accesToken = token.split(" ")[1]
-            jwt.verify(accesToken, process.env.JWT_ACCESS_KEY, (err, user) => {
+            const accessToken = token.split(" ")[1]
+            jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
                 if (err) {
                     res.status(403).json(
                         {

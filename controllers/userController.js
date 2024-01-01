@@ -26,7 +26,7 @@ const userController = {
         try {
             await User.findById(req.params.id)
             // await User.findByIdAndDelete(res.params.id)
-            return res.status(200).json({ messange: "Delete successfuly!" })
+            return res.status(200).json({ message: "Delete successfully!" })
         } catch (error) {
             return res.status(500).json(error)
         }

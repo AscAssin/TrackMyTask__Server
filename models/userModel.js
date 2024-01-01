@@ -5,16 +5,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         require: true,
         minlength: 6,
-        maxlength: 30,
+        maxLength: 30,
         unique: true
     },
     password: {
         type: String,
         require: true,
         minlength: 8,
-        maxlenght:20
+        maxLength:20
     },
-    fullname: {
+    fullName: {
         type: String,
         require: true
     },
@@ -23,10 +23,10 @@ const userSchema = new mongoose.Schema({
         require: true,
         unique: true
     },
-    googleid: {
+    googleId: {
         type: String
     },
-    accestoken: {
+    accessToken: {
         type: String
     },
     avatar: {
